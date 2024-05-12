@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/Aeonik-Regular.woff2") format("woff2"),
+    url("/fonts/Aeonik-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/Aeonik-Bold.woff2") format("woff2"),
+    url("/fonts/Aeonik-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("/fonts/Aeonik-Medium.woff2") format("woff2"),
+    url("/fonts/Aeonik-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  @apply bg-white;
+}
+
+@layer components {
+  .nav-link {
+    @apply mx-3 flex items-center px-1 py-1 text-base font-medium text-gray-900 hover:text-orange-400;
+  }
+  .nav-sub-link {
+    @apply block rounded-lg p-2 text-base font-medium leading-6 text-gray-900 hover:bg-gray-100;
+  }
+  .site-container {
+    @apply container mx-auto max-w-screen-lg px-8 xl:px-0;
+  }
+  .site-gutter {
+    @apply sm:mx-8;
+  }
+  .href-link {
+    @apply font-medium text-orange-400 underline underline-offset-2 hover:text-orange-700;
+  }
+  .field-input {
+    @apply block w-full rounded-lg border border-gray-300 bg-white p-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .field-label {
+    @apply mb-1 block font-medium text-gray-900;
+  }
+  .field-error {
+    @apply mt-1 block text-sm font-medium text-[#dc2626];
+  }
+  .button {
+    @apply box-border inline-flex h-10 items-center rounded-lg py-2 text-base font-medium leading-6 shadow-sm;
+  }
+  .button-full {
+    @apply w-full  justify-center;
+  }
+  .button-primary {
+    @apply border border-gray-600 border-opacity-20 bg-orange-400 py-1.5 text-white hover:bg-orange-700;
+  }
+  .button-secondary {
+    @apply border border-gray-300 bg-white py-1.5 text-gray-900 hover:bg-gray-50;
+  }
+  .button-outline {
+    @apply border-2 border-white bg-none py-1.5 text-white hover:bg-white hover:text-gray-900;
+  }
+}
+
+.feature-content {
+  @apply text-gray-700;
+}
+.feature-content p {
+  @apply pt-4 text-lg first:pt-0;
+}
+.feature-content a {
+  @apply href-link;
+}
+
+.remark-content {
+  @apply text-lg text-gray-900;
+}
+.remark-content p {
+  @apply pt-4 first:pt-0;
+}
+.remark-content h1,
+.remark-content h2,
+.remark-content h3,
+.remark-content h4,
+.remark-content h5,
+.remark-content h6 {
+  @apply pt-4;
+}
+.remark-content h1 {
+  @apply text-4xl font-bold;
+}
+.remark-content h2 {
+  @apply text-3xl font-bold;
+}
+.remark-content h3 {
+  @apply text-2xl font-bold;
+}
+.remark-content h4 {
+  @apply text-xl font-bold;
+}
+.remark-content h5 {
+  @apply text-lg font-bold;
+}
+.remark-content h6 {
+  @apply text-base font-bold;
+}
+.remark-content hr {
+  @apply mb-4 mt-8 border-gray-200;
+}
+.remark-content a {
+  @apply href-link;
+}
+.remark-content ol,
+ul {
+  @apply pl-4 text-gray-900;
+}
+.remark-content li {
+  @apply pl-2 pt-4;
+}
+.remark-content ol li {
+  @apply list-decimal;
+}
+.remark-content ul li {
+  @apply list-disc;
+}
