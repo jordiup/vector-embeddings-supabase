@@ -19,11 +19,6 @@ export default function HomePage() {
 
       <main className="flex flex-col items-center bg-white py-8 text-zinc-800">
         <h1>hello</h1>
-        <h1>hello</h1>
-        <h1>hello</h1>
-        <h1>hello</h1>
-        <h1>hello</h1>
-        <h1>hello</h1>
       </main>
     </Layout>
   );
