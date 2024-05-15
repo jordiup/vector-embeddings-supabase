@@ -1,9 +1,9 @@
 import { authRouter } from "./router/auth";
-import { discussionRouter } from "./router/discussion";
+import { baseRouter } from "./router/base";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
-  discussion: discussionRouter,
+  base: baseRouter,
   auth: authRouter,
 });
 

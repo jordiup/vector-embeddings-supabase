@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
-export const discussionRouter = createTRPCRouter({
+export const baseRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.post.findMany({
       include: { author: { select: { name: true, image: true } } },
