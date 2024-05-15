@@ -11,5 +11,11 @@
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "tailwindCSS.experimental.configFile": "./packages/config/tailwind/index.ts"
+  "tailwindCSS.experimental.configFile": "./packages/config/tailwind/index.ts",
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#ffb739",
+    "titleBar.activeForeground": "#000000",
+    "titleBar.inactiveBackground": "#c9782d",
+    "titleBar.inactiveForeground": "#fbf7d7"
+  }
 }
