@@ -17,34 +17,48 @@ import { Database } from "@acme/db";
 //   const client = createClient(url, privateKey);
 const supabase = createClient<Database>(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SECRET_SERVICE_ROLL_KEY,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  {},
 );
 
-export const run = async () => {
-  const vectorStore = await SupabaseVectorStore.fromTexts(
-    ["Hello world", "Bye bye", "What's this?"],
-    [{ id: 2 }, { id: 1 }, { id: 3 }],
-    new OpenAIEmbeddings(),
-    {
-      supabase,
-      tableName: "documents",
-      queryName: "match_documents",
-    },
-  );
+// export const run = async () => {
+//   const vectorStore = await SupabaseVectorStore.fromTexts(
+//     ["Hello world", "Bye bye", "What's this?"],
+//     [{ id: 2 }, { id: 1 }, { id: 3 }],
+//     new OpenAIEmbeddings(),
+//     {
+//       supabase,
+//       tableName: "documents",
+//       queryName: "match_documents",
+//     },
+//   );
 
-  const resultOne = await vectorStore.similaritySearch("Hello world", 1);
+//   const resultOne = await vectorStore.similaritySearch("Hello world", 1);
 
-  console.log(resultOne);
-};
+//   console.log(resultOne);
+// };
 
 export default async function (req: NextRequest, res: NextResponse) {
-  //   run();
+  // run();
   // supabase.functions.invoke('')
-  supabase.from("");
+  // supabase.from("");
   //   //   const { data, error } = await supabase.from("documents").select("*");
   //   if (error) {
   //     return res.status(500).json({ error: error.message });
   //   }
+  supabase
+    .schema("public")
+    .from("documents")
+    .insert({
+      content: "Hello world2",
+    })
+    .then((data) => {
+      return res.json(data);
+    })
+    .catch((error) => {
+      return res.status(500).json({ error: error.message });
+    });
+
   // res.json({ message: "Hello" });
   //   return res.json(data);
 }
