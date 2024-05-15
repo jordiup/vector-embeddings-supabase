@@ -13,9 +13,10 @@
   "dependencies": {
     "@acme/db": "workspace:*",
     "@supabase/auth-helpers-nextjs": "^0.6.0",
-    "@supabase/supabase-js": "^2.20.0",
+    "@supabase/supabase-js": "^2.43.2",
     "@trpc/client": "^10.27.1",
     "@trpc/server": "^10.27.1",
+    "openai": "^4.47.1",
     "superjson": "1.9.1",
     "zod": "^3.21.4"
   },

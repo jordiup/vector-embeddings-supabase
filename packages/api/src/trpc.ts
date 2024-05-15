@@ -43,7 +43,8 @@ type CreateContextOptions = {
 export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     user: opts.user,
-    prisma,
+    // @TODO: figure out prisma dev issue, we did just upgrade
+    // prisma,
   };
 };
 
