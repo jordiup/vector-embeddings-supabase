@@ -5,7 +5,7 @@ import { useDebounce } from "ahooks";
 import Layout from "../components/Layout";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { api } from "../utils/api";
+import { RouterOutputs, api } from "../utils/api";
 
 export default function HomePage() {
   // const postQuery = api.post.all.useQuery();
@@ -35,23 +35,30 @@ export default function HomePage() {
       return;
     }
 
-    addEmbeddingMutation.mutate({
-      embedding: embedQuery.data[0]?.embedding,
-      content: debouncedEmbeddingInput,
-    });
-
-    embedQuery.refetch();
+    addEmbeddingMutation
+      .mutateAsync({
+        embedding: embedQuery.data[0]?.embedding,
+        content: debouncedEmbeddingInput,
+      })
+      .finally(() => {
+        docsQuery.refetch();
+        setEmbeddingInput("");
+      });
   };
 
   return (
     <Layout>
       <Head>
-        <title></title>
+        <title>Vector Embeddings</title>
         <meta name="description" content="" />
-        <link rel="icon" href="/favicon.png" />
+        <link
+          rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👽</text></svg>"
+        />
       </Head>
 
       <main className="prose max-w-screen-lg space-y-4 *:rounded-md *:border-2 *:p-4 md:p-8">
+        <h2>supabase vector embedding playground</h2>
         {/* CREATE/PREVIEW EMBEDDING */}
         <section className="space-y-2">
           <h4>create embedding</h4>
@@ -79,7 +86,7 @@ export default function HomePage() {
           <div className="flex flex-row space-x-2 *:w-full *:border">
             <div className="max-h-[400px] space-y-8 overflow-clip">
               <h4>query preview</h4>
-              {embedQuery.isLoading && <Spinner />}
+              {embedQuery.isInitialLoading && <Spinner />}
               <code className="line-clamp-6 whitespace-pre text-wrap rounded-sm font-mono  text-xs">
                 {JSON.stringify(embedQuery.data, null, 2)}
               </code>
@@ -97,10 +104,9 @@ export default function HomePage() {
         {/* VIEW ALL EMBEDDINGS */}
         <section className="">
           <h4>all embeddings</h4>
-          <div className="space-y-8 bg-black/5">
-            <code className="whitespace-pre text-wrap rounded-sm  text-xs">
-              {JSON.stringify(docsQuery?.data?.slice(0, 4), null, 2)}
-            </code>
+          <div className="max-h-80 overflow-y-auto">
+            {docsQuery.isInitialLoading && <Spinner />}
+            <DocsRenderer docs={docsQuery.data} />
           </div>
         </section>
 
@@ -116,16 +122,31 @@ export default function HomePage() {
             />
           </div>
           <div className="space-y-8">
-            {searchQuery.isLoading && <Spinner />}
-            <code className="whitespace-pre text-wrap rounded-sm  text-xs">
-              {JSON.stringify(searchQuery, null, 2)}
-            </code>
+            {searchQuery.isInitialLoading && <Spinner />}
+            <DocsRenderer docs={searchQuery.data} />
           </div>
+        </section>
+        <section>
+          made with ❤️ by <a href="https://twitter.com/Jordi_Up">@jordi</a>
         </section>
       </main>
     </Layout>
   );
 }
+const DocsRenderer = ({ docs }: { docs: RouterOutputs["base"]["docs"] }) => {
+  return (
+    <div className="space-y-8  bg-black/5">
+      {docs?.slice(0, 12).map((doc, i) => (
+        <div key={i} className="flex flex-row gap-x-2 *:p-2">
+          <div className="min-w-40">{doc.content}</div>
+          <div className="flex-grow overflow-clip font-mono text-xs">
+            {doc.embedding}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const Spinner = () => (
   <svg
