@@ -8,11 +8,6 @@ import { Input } from "../components/ui/input";
 import { RouterOutputs, api } from "../utils/api";
 
 export default function HomePage() {
-  // const postQuery = api.post.all.useQuery();
-  // const deletePostMutation = api.post.delete.useMutation({
-  //   onSettled: () => postQuery.refetch(),
-  // });
-
   const docsQuery = api.base.docs.useQuery();
 
   const [text, setText] = React.useState("");
