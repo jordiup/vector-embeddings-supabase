@@ -12,18 +12,21 @@ export type Database = {
       documents: {
         Row: {
           content: string | null
+          created_at: string
           embedding: string | null
           id: number
           metadata: Json | null
         }
         Insert: {
           content?: string | null
+          created_at?: string
           embedding?: string | null
           id?: number
           metadata?: Json | null
         }
         Update: {
           content?: string | null
+          created_at?: string
           embedding?: string | null
           id?: number
           metadata?: Json | null

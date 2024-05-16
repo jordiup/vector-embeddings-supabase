@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { TRPCError } from "@trpc/server";
 import OpenAI from "openai";
+import { type Embedding } from "openai/resources";
 import { z } from "zod";
 
 import { type Database } from "@acme/db";
@@ -15,7 +16,11 @@ export const supabase = createClient<Database>(
 
 export const baseRouter = createTRPCRouter({
   docs: publicProcedure.query(async ({ ctx }) => {
-    const res = await supabase.schema("public").from("documents").select();
+    const res = await supabase
+      .schema("public")
+      .from("documents")
+      .select()
+      .order("created_at");
 
     if (res.error) {
       throw new TRPCError({
@@ -32,7 +37,7 @@ export const baseRouter = createTRPCRouter({
         query: input,
       });
 
-      if (res.error) {
+      if (res.error && !res.data) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: res.error.message,
@@ -59,6 +64,27 @@ export const baseRouter = createTRPCRouter({
     return embedding.data;
   }),
 
+  addEmbedding: publicProcedure
+    .input(
+      z.object({
+        embedding: z.array(z.number()),
+        content: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const res = await supabase
+        .schema("public")
+        .from("documents")
+        .insert({ ...input });
+
+      if (res.error) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: res.error.message,
+        });
+      }
+      return res.data;
+    }),
   // byId: publicProcedure
   //   .input(z.object({ id: z.string() }))
   //   .query(({ ctx, input }) => {
